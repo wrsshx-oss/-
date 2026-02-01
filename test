@@ -5170,25 +5170,29 @@
                         e.translate(this.px, this.lOl0I),
                         r = this.gamepad_selected ? "hsla(120,95%,65%,1)" : "hsla(120,85%,55%,.9)",
                         a = e.createLinearGradient(0, 0, 0, this.O001I),
-                        a.addColorStop(0, "rgba(18,20,26,0.98)"),
-                        a.addColorStop(1, "rgba(6,8,12,0.96)"),
+                        a.addColorStop(0, this.enabled ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.12)"),
+                        a.addColorStop(.5, this.enabled ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)"),
+                        a.addColorStop(1, this.enabled ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.02)"),
                         e.fillStyle = a,
                         e.fillRect(0, 0, this.llOll, this.O001I),
-                        e.fillStyle = "rgba(255,255,255,0.03)",
-                        e.fillRect(0, 0, this.llOll, .08 * this.O001I),
-                        e.fillStyle = "rgba(120,255,160,0.08)",
-                        e.beginPath(),
-                        e.moveTo(0, 0),
-                        e.lineTo(.32 * this.llOll, 0),
-                        e.lineTo(.24 * this.llOll, .35 * this.O001I),
-                        e.lineTo(0, .35 * this.O001I),
-                        e.closePath(),
-                        e.fill(),
-                        e.shadowBlur = Math.max(6, this.O001I / 18),
+                        e.fillStyle = this.enabled ? "hsla(120,60%,55%,0.14)" : "hsla(120,30%,45%,0.06)",
+                        e.fillRect(0, 0, this.llOll, this.O001I),
+                        e.fillStyle = "rgba(255,255,255,0.22)",
+                        e.fillRect(0, 0, this.llOll, .16 * this.O001I),
+                        o = e.createLinearGradient(0, 0, this.llOll, this.O001I),
+                        o.addColorStop(0, "rgba(255,255,255,0.18)"),
+                        o.addColorStop(.35, "rgba(255,255,255,0.03)"),
+                        o.addColorStop(1, "rgba(255,255,255,0)"),
+                        e.fillStyle = o,
+                        e.fillRect(0, 0, this.llOll, this.O001I),
+                        e.lineWidth = Math.max(1, Math.round(this.O001I / 140)),
+                        e.strokeStyle = "rgba(255,255,255,0.35)",
+                        e.strokeRect(.5, .5, this.llOll - 1, this.O001I - 1),
+                        e.shadowBlur = this.enabled ? Math.max(8, this.O001I / 14) : 0,
                         e.shadowColor = r,
                         e.strokeStyle = r,
                         e.lineWidth = Math.max(1, Math.round(this.O001I / 120)),
-                        e.strokeRect(.5, .5, this.llOll - 1, this.O001I - 1),
+                        e.strokeRect(1.5, 1.5, this.llOll - 3, this.O001I - 3),
                         e.shadowBlur = 0,
                         n = this.name.split(" "),
                         o = Math.round(Math.min(this.O001I / 5, this.llOll / 12)),
@@ -5230,23 +5234,21 @@
                         for (this.color = "hsla(" + this.hue + ",70%,70%,1)",
                         t.save(),
                         t.translate(this.px, this.lOl0I),
-                        t.strokeStyle = this.color,
-                        t.lineWidth = this.O001I / 120,
-                        t.shadowBlur = this.O001I / 10,
-                        t.shadowOpacity = 1,
+                        t.fillStyle = "rgba(255,255,255,0.18)",
+                        t.fillRect(0, 0, this.llOll, this.O001I),
+                        t.fillStyle = "hsla(" + this.hue + ",60%,55%,0.12)",
+                        t.fillRect(0, 0, this.llOll, this.O001I),
+                        t.fillStyle = "rgba(255,255,255,0.22)",
+                        t.fillRect(0, 0, this.llOll, .2 * this.O001I),
+                        t.lineWidth = Math.max(1, Math.round(this.O001I / 140)),
+                        t.strokeStyle = "rgba(255,255,255,0.35)",
+                        t.strokeRect(.5, .5, this.llOll - 1, this.O001I - 1),
+                        t.shadowBlur = Math.max(6, this.O001I / 12),
                         t.shadowColor = this.color,
-                        a = this.O001I / 30,
-                        i = this.O001I / 8,
-                        t.beginPath(),
-                        t.moveTo(a, a),
-                        t.lineTo(this.llOll - i, a),
-                        t.lineTo(this.llOll - a, i),
-                        t.lineTo(this.llOll - a, this.O001I + a),
-                        t.lineTo(a, this.O001I + a),
-                        t.closePath(),
-                        t.stroke(),
+                        t.strokeStyle = this.color,
+                        t.lineWidth = Math.max(1, Math.round(this.O001I / 120)),
+                        t.strokeRect(1.5, 1.5, this.llOll - 3, this.O001I - 3),
                         t.shadowBlur = 0,
-                        t.shadowOpacity = 0,
                         o = this.name.split(" "),
                         h = Math.round(Math.min(this.O001I / 4, this.llOll / 8)),
                         t.font = h + "pt Play",
@@ -5943,6 +5945,95 @@
                         }
                     }
                     ,
+                    t.prototype.updateNamesFromScene = function () {
+                        var t, e, i, s, l, n, a, o, r, h, u, d, O, c, p;
+
+                        if (
+                            null != this.data &&
+                            null != this.IOOll &&
+                            null != this.IOOll.lI1OO &&
+                            null != this.IOOll.lI1OO.OIIIO &&
+                            null != this.IOOll.names
+                        ) {
+                            this.update2(this.data, this.hue);
+
+                            i = this.canvas2.getContext("2d");
+                            i.save();
+                            i.translate(this.canvas2.width / 2, this.canvas2.height / 2);
+                            i.scale(2 / this.canvas2.width, 2 / this.canvas2.height);
+
+                            i.fillStyle = "hsla(" + this.hue + ",90%,90%,1)";
+                            o = Math.max(16, Math.min(28, Math.round(this.canvas.width / 22)));
+
+                            i.font = o + "pt Play";
+                            i.textAlign = "center";
+                            i.textBaseline = "top";
+
+                            r = this.IOOll.lI1OO.OIIIO.status.id;
+                            h = this.IOOll.lI1OO.OIIIO.status.x / this.IOOll.I1l0I;
+                            u = this.IOOll.lI1OO.OIIIO.status.y / this.IOOll.I1l0I;
+                            d = this.IOOll.mode.radar_zoom;
+
+                            i.shadowColor = "hsla(" + this.hue + ",90%,90%,.5)";
+                            i.shadowBlur = 6;
+
+                            if (
+                            null != this.IOOll.lI1OO.OOOl1 &&
+                            null != this.IOOll.lI1OO.OOOl1.IO111
+                            ) {
+                            O = this.IOOll.lI1OO.OOOl1.IO111;
+
+                            for (t = 0, e = O.length; t < e; t++) {
+                                c = O[t];
+
+                                if (
+                                null != c &&
+                                null != c.IOOOI &&
+                                null != c.IOOOI.status &&
+                                c.IOOOI.status.alive
+                                ) {
+                                p = c.IOOOI.status.id;
+
+                                if (p !== r && (n = this.IOOll.names.get(p))) {
+                                    a = c.IOOOI.status.x / this.IOOll.I1l0I;
+                                    s = c.IOOOI.status.y / this.IOOll.I1l0I;
+
+                                    a = a - h;
+                                    s = s - u;
+
+                                    a = (a + 1) % 2;
+                                    if (a < 0) a += 2;
+                                    a -= 1;
+
+                                    s = (s + 1) % 2;
+                                    if (s < 0) s += 2;
+                                    s -= 1;
+
+                                    if (Math.max(Math.abs(a), Math.abs(s)) <= 1 / d) {
+                                    a *= d;
+                                    s *= d;
+
+                                    a = Math.max(-0.95, Math.min(0.95, a));
+                                    s = Math.max(-0.95, Math.min(0.95, s));
+
+                                    i.fillText(
+                                        n.substring(0, 12),
+                                        a * (this.canvas2.width / 2),
+                                        -s * (this.canvas2.height / 2) - o
+                                    );
+                                    }
+                                }
+                                }
+                            }
+                            }
+
+                            i.shadowBlur = 0;
+                            i.restore();
+                            this.texture2.needsUpdate = !0;
+                        }
+                        };
+
+                    
                     t.prototype.updateRepulsor = function(t) {
                         var e, i, s, l, n, a, o;
                         if (null == this.repulsor_backup && (this.repulsor_backup = document.createElement("canvas"),
@@ -8161,7 +8252,7 @@
                     }
                     ,
                     i.prototype.showWeaponStore = function(t) {
-                        if (this.IOOll.mode.show_weaponsbar && (!this.IOOll.mode.restricted_weapons_store || t))
+                        if (this.IOOll.mode.show_weaponsbar)
                             return null == this.weapon_store && (this.weapon_store = new WeaponStore(this.IOOll),
                             this.IOOll.is_mobile_app ? this.add(this.weapon_store, [.05, .05, .9, .9]) : this.add(this.weapon_store, [.25, .25, .5, .5])),
                             this.weapon_store.O0010(),
@@ -9488,7 +9579,7 @@
                             this.cooling[s] && O.next_shot <= this.IOOll.lI1OO.OOOl1.OI0l1 && (this.cooling[s] = !1,
                             this.repaint(),
                             this.IOOll.lIO0I.beep(2, .25));
-                        for (d = !this.IOOll.mode.restricted_weapons_store,
+                        for (d = !0,
                         d !== this.store_allowed && (this.store_allowed = d,
                         this.repaint()),
                         r = 1e7,
@@ -9607,7 +9698,7 @@
                         this.add(this.countdown, [.7, .9, .1, .1])),
                         this.shown = !1,
                         this.visible = !1,
-                        this.block_ship_control = !0
+                        this.block_ship_control = !1
                     }
                     return extend(e, t),
                     e.prototype.O0010 = function() {
